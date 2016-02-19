@@ -1,0 +1,26 @@
+{
+  "name": "neg-config",
+  "version": "0.0.1",
+  "description": "node.js client for Newegg configuration service.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamesYYang/neg-config.git"
+  },
+  "keywords": [
+    "node.js",
+    "config"
+  ],
+  "author": "James.Y.Yang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JamesYYang/neg-config/issues"
+  },
+  "homepage": "https://github.com/JamesYYang/neg-config#readme",
+  "dependencies": {
+    "node-zookeeper-client": "^0.2.2"
+  }
+}
