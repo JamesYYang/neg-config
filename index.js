@@ -17,7 +17,7 @@ exports.init = (options) => {
       reject(new Error('Please provide connection string.'));
     }
     var conn = getConnString(options);
-    if(!conn){
+    if (!conn) {
       reject(new Error('Please provide connection string.'));
     }
     logger = options.logger || console;
@@ -41,16 +41,27 @@ exports.watchConfig = (system, name, callback) => {
     throw new Error('Please provide system and config name');
   }
   path = `/${system}/${name}`;
-  getData(callback);
+  getData(true, callback);
 };
 
-var getData = function (callback) {
-  client.getData(path,
-    (event) => {
-      logger.info('data changed');
-      logger.info(event);
-      getData();
-    },
+exports.retriveConfig = (system, name, callback) => {
+  if (!system || !name) {
+    throw new Error('Please provide system and config name');
+  }
+  path = `/${system}/${name}`;
+  getData(false, callback);
+};
+
+var getData = function (isWatch, callback) {
+  var watcher = (event) => {
+    logger.info('data changed');
+    logger.info(event);
+    getData();
+  };
+  if (!isWatch) {
+    watcher = null;
+  }
+  client.getData(path, watcher,
     (error, data, stat) => {
       if (error) {
         logger.error(error);
@@ -60,6 +71,9 @@ var getData = function (callback) {
           configObj = JSON.parse(configString);
         } catch (err) {
           configObj = configString;
+        }
+        if(!isWatch){
+          client.close();
         }
         if (callback) {
           callback(configObj);
