@@ -1,9 +1,8 @@
 var config = require('../index');
 
-config.init({env: 'gdev'})
+config.init({env: 'prd_e7'})
 .then(() =>{
-  config.retriveConfig('envionment', 'name', (data) => {
+  config.retriveConfig('bts', 'gateway_wh7', (data) => {
     console.log(data);
-    setInterval(() => console.log(config.getConfig()), 3000);
   });
 }).catch((error) => console.error(error));
