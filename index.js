@@ -1,5 +1,5 @@
-var zookeeper = require('node-zookeeper-client');
-var connStr = {
+const zookeeper = require('node-zookeeper-client');
+const connStr = {
   gdev: '10.16.75.22:8481,10.16.75.24:8481,10.16.75.26:8481',
   gqc: '172.16.168.84:8481',
   prdtesting: '10.1.41.205:8481',
@@ -34,38 +34,40 @@ exports.init = (options) => {
   });
 };
 
-var getConnString = (options) => {
+let getConnString = (options) => {
   var conn = options.connectionString || connStr[options.env];
   return conn;
 };
 
-exports.watchConfig = (system, name, callback) => {
+let validata = (system, name) => {
   if (!system || !name) {
     throw new Error('Please provide system and config name');
   }
   path = `/${system}/${name}`;
-  getData(true, callback);
-};
+  return path;
+}
 
 exports.retriveConfig = (system, name, callback) => {
-  if (!system || !name) {
-    throw new Error('Please provide system and config name');
-  }
-  path = `/${system}/${name}`;
-  getData(false, callback);
+  this.watchConfig(system, name, callback);
 };
 
-var getData = function (isWatch, callback) {
-  var watcher = (event) => {
-    logger.info('data changed');
-    logger.info(event);
-    getData();
-  };
-  if (!isWatch) {
-    watcher = null;
+exports.watchConfig = (system, name, callback, watchCallback) => {
+  path = validata(system, name);
+  getData(callback, watchCallback);
+};
+
+var getData = function (callback, watchCallback) {
+  var watcher = null;
+  if (watchCallback) {
+    watcher = (event) => {
+      logger.info('data changed');
+      logger.info(event);
+      getData(null, watchCallback);
+    };
   }
   client.getData(path, watcher,
     (error, data, stat) => {
+      let isCallback = false;
       if (error) {
         logger.error(error);
       } else {
@@ -75,11 +77,14 @@ var getData = function (isWatch, callback) {
         } catch (err) {
           configObj = configString;
         }
-        if(!isWatch){
-          client.close();
-        }
         if (callback) {
           callback(configObj);
+          isCallback = true;
+        }
+        if (!watchCallback) {
+          client.close();
+        } else if (!isCallback) {
+          watchCallback(configObj);
         }
       }
     });

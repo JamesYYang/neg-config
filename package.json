@@ -1,10 +1,10 @@
 {
   "name": "neg-config",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "node.js client for Newegg configuration service.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node examples\\test.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/JamesYYang/neg-config#readme",
   "dependencies": {
-    "node-zookeeper-client": "^0.2.2"
+    "node-zookeeper-client": "^1.1.0"
   }
 }

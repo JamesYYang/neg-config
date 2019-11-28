@@ -1,8 +1,12 @@
 var config = require('../index');
 
-config.init({env: 'prd_e7'})
+config.init({env: 'gdev'})
 .then(() =>{
-  config.retriveConfig('bts', 'gateway_wh7', (data) => {
+  config.watchConfig('bts', 'd-proxy', (data) => {
+    console.log(`get data..........`);
+    console.log(data);
+  }, (data) => {
+    console.log(`watch data..........`);
     console.log(data);
   });
 }).catch((error) => console.error(error));
