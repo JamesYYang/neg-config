@@ -1,8 +1,8 @@
 var config = require('../index');
 
-config.init({env: 'gdev'})
+config.init({env: 'prdtesting'})
 .then(() =>{
-  config.watchConfig('bts', 'd-proxy', (data) => {
+  config.watchConfig('bts', 'user-profile', (data) => {
     console.log(`get data..........`);
     console.log(data);
   }, (data) => {

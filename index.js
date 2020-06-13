@@ -2,8 +2,8 @@ const zookeeper = require('node-zookeeper-client');
 const connStr = {
   gdev: '10.16.75.22:8481,10.16.75.24:8481,10.16.75.26:8481',
   gqc: '172.16.168.84:8481',
-  prdtesting: '10.1.41.205:8481',
-  prd: '10.1.49.61:8481,10.1.49.62:8481,10.1.49.63:8481,172.16.139.228:8481,172.16.139.229:8481,172.16.139.230:8481,172.16.41.141:8481,172.16.41.142:8481,172.16.41.143:8481',
+  prdtesting: 'configpre.newegg.org:80',
+  prd: 'config11.newegg.org:80,config4.newegg.org:80,config7.newegg.org:80',
   prd_e4: 'config4.newegg.org:80',
   prd_e11: 'config11.newegg.org:80',
   prd_e7: 'config7.newegg.org:80'
